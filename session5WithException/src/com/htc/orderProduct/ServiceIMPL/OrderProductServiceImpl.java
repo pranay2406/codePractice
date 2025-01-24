@@ -18,7 +18,7 @@ public class OrderProductServiceImpl implements OrderProductService{
           try {
 			return orderproductdao.addOrder(orderproduct);
 		} catch (OrderManagementException e) {
-			System.err.println(e.getStackTrace()+" Error Message "+e.getErrorMessage());
+			System.err.println(e.getStackTrace()+" Error Message:---- "+e.getErrorMessage());
 			return "unable to make add Order";
 		}
 	}
@@ -28,7 +28,7 @@ public class OrderProductServiceImpl implements OrderProductService{
 		try {
 			return orderproductdao.findAllProductByOrderId(orderId);
 		} catch (OrderManagementException e) {
-			System.err.println(e.getStackTrace()+" Error Message "+e.getErrorMessage());
+			System.err.println(e.getStackTrace()+" Error Message:---- "+e.getErrorMessage());
 			return null;
 		}
 	}
@@ -38,7 +38,7 @@ public class OrderProductServiceImpl implements OrderProductService{
 		try {
 			return orderproductdao.deleteOrderedProduct(orderid, product);
 		} catch (OrderManagementException e) {
-			System.err.println(e.getStackTrace()+" Error Message "+e.getErrorMessage());
+			System.err.println(e.getStackTrace()+" Error Message:---- "+e.getErrorMessage());
 			return "unable to delete product";
 		}
 	}

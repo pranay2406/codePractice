@@ -28,7 +28,7 @@ public class orderProductDaoImpl implements orderProductDao{
 	public List<Product> findAllProductByOrderId(String orderId) throws OrderManagementException {
 		
 		       if(!ordermapProduct.isEmpty()) {
-		    	   if(ordermapProduct.containsKey(orderId.toUpperCase())){
+		    	   if(ordermapProduct.containsKey(orderId)){
 			    		List<Product> product = ordermapProduct.get(orderId);
 			    		  if(!product.isEmpty()) {
 			    			  return product;
@@ -40,7 +40,7 @@ public class orderProductDaoImpl implements orderProductDao{
 			    	  }
 		    	   else
 		    	   {
-		    		   throw new OrderManagementException("orderId not present", LocalDateTime.now());
+		    		   throw new OrderManagementException("Unavle to process the request. Please check orderid: "+orderId, LocalDateTime.now());
 		    	   }
 		       }
 		    	else{

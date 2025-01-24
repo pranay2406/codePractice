@@ -45,21 +45,21 @@ public class OrderProductApp {
                                                             int quantity;
                                                             Product product;
                                                             System.out.println("Enter the orderid to update quantity:");
-                                                            orderid = input.next();
+                                                            orderid = input.next().toUpperCase();
                                                             System.out.println("Enter the productid and quantity");
-                                                            productid=input.next();
+                                                            productid=input.next().toUpperCase();
                                                             quantity = input.nextInt();
-                                                            product = new Product(productid,"",quantity,0.0f,null,null);
+                                                            product = new Product(productid.toUpperCase(),"",quantity,0.0f,null,null);
                                                        System.out.println(orderproductservice.updateProductQuantity(orderid, product));;
                                                             break;
                                                             
-                                                case "search":
+                                                case "delete":
                                                             String deleteorderid,dproductid;
                                                             Product deleteproduct;
                                                             System.out.println("Enter the orderid to search:");
-                                                            deleteorderid = input.next();
+                                                            deleteorderid = input.next().toUpperCase();
                                                             System.out.println("Enter the product id to be deleted:");
-                                                            dproductid = input.next();
+                                                            dproductid = input.next().toUpperCase();
                                                             deleteproduct = new Product(dproductid,"",0,0.0f,null,null);
                                                        System.out.println(orderproductservice.deleteOrderedProduct(deleteorderid, deleteproduct));
                                                             break;

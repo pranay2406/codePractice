@@ -28,8 +28,8 @@ public class orderProductDaoImpl implements orderProductDao{
 	public List<Product> findAllProductByOrderId(String orderId) throws OrderManagementException {
 		
 		       if(!ordermapProduct.isEmpty()) {
-		    	   if(ordermapProduct.containsKey(orderId)){
-			    		List<Product> product = ordermapProduct.get(orderId);
+		    	   if(ordermapProduct.containsKey(orderId.toUpperCase())){
+			    		List<Product> product = ordermapProduct.get(orderId.toUpperCase());
 			    		  if(!product.isEmpty()) {
 			    			  return product;
 			    		  }
@@ -51,20 +51,40 @@ public class orderProductDaoImpl implements orderProductDao{
 
 	@Override
 	public String deleteOrderedProduct(String orderid, Product product) throws OrderManagementException {
-		  		    if(ordermapProduct.containsKey(product)) {
-		  		       return	ordermapProduct.get(orderid).remove(product)+" Removed.";
-		  		    }
-		  		    else {
-		  		    	//throw new OrderManagementException("Sorry, Product not found in Cart!", LocalDateTime.now());
-		  		    	throw new OrderManagementException("Cart is Empty", LocalDateTime.now());
-		  		    }
-
+		  	if(!ordermapProduct.isEmpty()) {
+		  		 List<Product> products = ordermapProduct.get(orderid.toUpperCase());
+		  		    Product deleteProduct = products.stream()
+		  		    		.filter(prod -> prod.getProductId().equalsIgnoreCase(product.getProductId()))
+		  		    		.findAny().orElse(null);
+		  		  if(deleteProduct!= null){
+		  			  products.remove(deleteProduct);
+		  		  }
+		  		  else {
+		  			  throw new OrderManagementException("Sorry, Product not found in Cart", LocalDateTime.now());
+		  		  }
+		  		return deleteProduct.getProductDescription()+" removed";  
+		  	}
+		  	else {
+		  		throw new OrderManagementException("Cart is Empty", LocalDateTime.now());
+		  	}
+		
 	}
 
 	@Override
 	public String updateProductQuantity(String orderid, Product product) throws OrderManagementException {
-		            if(ordermapProduct.containsKey(orderid)){
-		            	  return  ordermapProduct.get(orderid).add(product)+" product Updated.";
+		            if(!ordermapProduct.isEmpty()){
+		            	  List<Product> products = ordermapProduct.get(orderid);
+		            	  Product updateProduct = products.stream()
+		            			  .filter(prod -> prod.getProductId().equalsIgnoreCase(product.getProductId()))
+		            			  .findAny().orElse(null);
+		            	  if(updateProduct != null) {
+		            		  updateProduct.setQuantityOnHand(product.getQuantityOnHand());
+		            	  }
+		            	  else {
+		            		  throw new OrderManagementException("Sorry product not found in cart.", LocalDateTime.now());
+		            	  }
+		            	  return product.getProductId() + " Updated!";
+		            		  
 		             }
 		             else{
 		            	throw new OrderManagementException("Sorry, Order id Not Available", LocalDateTime.now());
